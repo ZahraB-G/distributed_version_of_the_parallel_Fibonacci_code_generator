@@ -1,4 +1,3 @@
-/*The templete of this program is provided by Dr. Rincon that I downloaded from blackboard*/
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -194,7 +193,8 @@ int main(int argc, char *argv[])
       }
     
    }
+    close(sockfd);//closing the sockets
     delete[] fibTable;
     delete[] fibIndex;
-     return 0; 
+    return 0; 
 }
