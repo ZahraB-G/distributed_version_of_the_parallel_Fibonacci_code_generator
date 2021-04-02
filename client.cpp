@@ -95,6 +95,7 @@ void *inc_x(void *x_void_ptr)
     
     (*x_ptr).fibonacciCodeWord = string(serverMessage.fibonacciCodeWord);//put the fibonacci code word that server sends to each node 
     bzero(buffer,256);
+    close(sockfd); //closing the socket
 	return NULL;
 }
 //This function gets a vector, array of string(which is in the file) and the inputfile array
@@ -136,6 +137,13 @@ int main(int argc, char *argv[])
     //sorting the clinetMessage based on frequency
     sort(clinetMessage.begin(),clinetMessage.end(), greater_than_key());
     int counter=1;
+    //This is an error that if the input has less than 3 inputs 
+    char* e;
+    if (argc < 3) {
+       fprintf(stderr,"usage %s hostname port\n", argv[0]);
+       exit(0);
+    }
+    
     //in this loop assign integer to the each symbol and also portnumber and hostname
     for(int i =0; i<=numberOfSymbol; i++)
     {
@@ -146,12 +154,7 @@ int main(int argc, char *argv[])
     //Till this point reads the info from input and creating message
     //____________________________________________________
 
-    //This is an error that if the input has less than 3 inputs 
-    char* e;
-    if (argc < 3) {
-       fprintf(stderr,"usage %s hostname port\n", argv[0]);
-       exit(0);
-    }
+
     //_________________________________________________________
     //Create threads to be sent to server 
     pthread_t *tid;
@@ -193,7 +196,5 @@ int main(int argc, char *argv[])
         }
     }
     cout<<"Decompressed message = "<<decompossedFunction(clinetMessage,fileInputArray,c)<<endl;
-    delete[] tid;
-    delete[] e;
     return 0;
 }
